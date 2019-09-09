@@ -1,0 +1,69 @@
+/*
+.iconic * {
+    fill: #6c757d;
+    stroke:  #343a40;
+}
+*/
+
+.iconic-property-accent {
+    fill:  #343a40;
+    stroke:  #6c757d;
+  }
+
+.iconic-state-active * {
+    fill:  #A182C3;
+    stroke:  #AF79B4;
+  }
+
+.iconic-state-active .iconic-property-accent {
+    fill: lightgray;
+    stroke: lightgray;
+}
+
+.icon-navbar {
+    width: 25px;
+    height: 18px;
+    margin-right: 10px;
+    fill: white;
+    stroke: white;
+}
+
+.icon-add {
+    fill: lightgray;
+    stroke: lightgray;
+}
+
+.iconic-briefcase-body-top {
+    fill: #A182C3;
+    stroke: #AF79B4;
+}
+
+.icon-leftbar {
+    width: 25px;
+    height: 25px;
+    /*margin-right: 10px;*/
+    margin-top: 3px;
+    font-size: 22px;
+}
+
+.icon-sm {
+    width: 25px;
+}
+
+.icon-md {
+    width: 50px;
+}
+
+.icon-xl {
+    width: 125px;
+}
+
+.icon-xxl {
+    width: 225px;
+}
+/*
+.iconic-bar-chart-bar {
+    fill:  #28a745;
+    stroke:  #28a745;
+}
+*/

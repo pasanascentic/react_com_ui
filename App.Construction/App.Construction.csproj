@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <ApplicationInsightsResourceId>/subscriptions/1a221a67-6064-4402-8ac0-1dbbd58e744f/resourcegroups/nvv-construction-test/providers/microsoft.insights/components/nvv-construction-test</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/1a221a67-6064-4402-8ac0-1dbbd58e744f/resourcegroups/nvv-construction-test/providers/microsoft.insights/components/nvv-construction-test</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>cbce8c06-62ce-43cc-9b77-99d781ffe3bd</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\youcap-fonts.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\font\webfonts\346E86_0_0.woff2" />
+    <None Include="wwwroot\font\webfonts\346E86_1_0.woff2" />
+    <None Include="wwwroot\font\webfonts\346E86_2_0.woff2" />
+    <None Include="wwwroot\font\webfonts\346E86_3_0.woff2" />
+    <None Include="wwwroot\font\webfonts\346E86_4_0.woff2" />
+    <None Include="wwwroot\font\youcap-fonts.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Azure.CognitiveServices.Language.TextAnalytics" Version="2.1.0-preview" />
+    <PackageReference Include="Microsoft.Azure.DocumentDB" Version="2.2.1" />
+    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.2.1" />
+
+    <PackageReference Include="Microsoft.Identity.Client" Version="2.7.0" />    
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.2.0" />
+    <PackageReference Include="Stripe.net" Version="27.4.0" />
+    
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientApp\api\" />
+    <Folder Include="ClientApp\backbone\" />
+    <Folder Include="ClientApp\modals\" />
+    <Folder Include="ClientApp\panels\" />
+  </ItemGroup>
+  
+  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js" />
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Performing first-run Webpack build..." />
+  </Target>
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>

@@ -1,0 +1,73 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3436166, 2017-08-13T08:31:19-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed font/webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: Quarion-Book by Rene Bieder
+ * URL: https://www.myfonts.com/fonts/rene-bieder/quarion/book/
+ * 
+ * Webfont: Quarion-Hairline by Rene Bieder
+ * URL: https://www.myfonts.com/fonts/rene-bieder/quarion/hairline/
+ * 
+ * Webfont: Quarion-Heavy by Rene Bieder
+ * URL: https://www.myfonts.com/fonts/rene-bieder/quarion/heavy/
+ * 
+ * Webfont: Quarion-Light by Rene Bieder
+ * URL: https://www.myfonts.com/fonts/rene-bieder/quarion/light/
+ * 
+ * Webfont: Quarion-Thin by Rene Bieder
+ * URL: https://www.myfonts.com/fonts/rene-bieder/quarion/thin/
+ * 
+ * 
+ * License: https://www.myfonts.com/viewlicense?type=web&buildid=3436166
+ * Licensed pageviews: 10,000
+ * font/webfonts copyright: Copyright &#x00A9; 2017 by Ren&#x00E9; Bieder. All rights reserved.
+ * 
+ * © 2017 MyFonts Inc
+*/
+
+@font-face {font-family: 'Quarion-Book';src: url('webfonts/346E86_0_0.eot');src: url('webfonts/346E86_0_0.eot?#iefix') format('embedded-opentype'),url('webfonts/346E86_0_0.woff2') format('woff2'),url('webfonts/346E86_0_0.woff') format('woff'),url('webfonts/346E86_0_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'Quarion-Hairline';src: url('webfonts/346E86_1_0.eot');src: url('webfonts/346E86_1_0.eot?#iefix') format('embedded-opentype'),url('webfonts/346E86_1_0.woff2') format('woff2'),url('webfonts/346E86_1_0.woff') format('woff'),url('webfonts/346E86_1_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'Quarion-Heavy';src: url('webfonts/346E86_2_0.eot');src: url('webfonts/346E86_2_0.eot?#iefix') format('embedded-opentype'),url('webfonts/346E86_2_0.woff2') format('woff2'),url('webfonts/346E86_2_0.woff') format('woff'),url('webfonts/346E86_2_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'Quarion-Light';src: url('webfonts/346E86_3_0.eot');src: url('webfonts/346E86_3_0.eot?#iefix') format('embedded-opentype'),url('webfonts/346E86_3_0.woff2') format('woff2'),url('webfonts/346E86_3_0.woff') format('woff'),url('webfonts/346E86_3_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'Quarion-Thin';src: url('webfonts/346E86_4_0.eot');src: url('webfonts/346E86_4_0.eot?#iefix') format('embedded-opentype'),url('webfonts/346E86_4_0.woff2') format('woff2'),url('webfonts/346E86_4_0.woff') format('woff'),url('webfonts/346E86_4_0.ttf') format('truetype');}
+ 
+.Quarion-Book { 
+	font-family: Quarion-Book;
+	font-weight: normal;
+	font-style: normal;
+}
+.Quarion-Hairline { 
+	font-family: Quarion-Hairline;
+	font-weight: normal;
+	font-style: normal;
+}
+.Quarion-Heavy { 
+	font-family: Quarion-Heavy;
+	font-weight: normal;
+	font-style: normal;
+}
+.Quarion-Light { 
+	font-family: Quarion-Light;
+	font-weight: normal;
+	font-style: normal;
+}
+.Quarion-Thin { 
+	font-family: Quarion-Thin;
+	font-weight: normal;
+	font-style: normal;
+}
+
