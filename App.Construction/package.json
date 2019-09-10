@@ -47,5 +47,9 @@
     "url-loader": "0.6.2",
     "webpack": "3.10.0",
     "webpack-hot-middleware": "2.21.0"
+  },
+  "dependencies": {
+    "@types/react-datepicker": "^2.9.2",
+    "react-datepicker": "^2.9.6"
   }
 }

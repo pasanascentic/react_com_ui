@@ -2,6 +2,8 @@ import * as React from 'react';
 import { LanguageContext } from '../../backbone/Language';
 import { Requireable } from 'prop-types';
 import { RouteComponentProps } from 'react-router';
+import DatePicker from "react-datepicker";
+import Popper from 'popper.js';
 
 export type Color = 'primary' | 'secondary';
 export type TitleSize = 'font-xs' | 'font-sm' | 'font-md' | 'font-lg' | 'font-xl' | number;
@@ -1410,6 +1412,257 @@ export class Spin extends React.Component<SpinProps, SpinState> {
                             }
                             {!backdropDisable && <div className={'yc_spin_backdrop ' + backdropClass}></div>}
                         </div>
+                    )}
+                </LanguageContext.Consumer>
+            </React.Fragment>
+        )
+    }
+}
+
+
+
+
+export interface DateTimePickerState {
+}
+
+interface HighlightDates {
+    [className: string]: Date[];
+}
+
+export interface DateTimePickerProps {
+    adjustDateOnChange?: boolean;
+    allowSameDay?: boolean;
+    autoComplete?: string;
+    autoFocus?: boolean;
+    calendarClassName?: string;
+    calendarContainer?(props: { children: React.ReactNode[] }): React.ReactNode;
+    children?: React.ReactNode;
+    className?: string;
+    clearButtonTitle?: string;
+    customInput?: React.ReactNode;
+    customInputRef?: string;
+    dateFormat?: string | string[];
+    dateFormatCalendar?: string;
+    dayClassName?(date: Date): string | null;
+    disabled?: boolean;
+    disabledKeyboardNavigation?: boolean;
+    dropdownMode?: 'scroll' | 'select';
+    endDate?: Date | null;
+    excludeDates?: Date[];
+    excludeTimes?: Date[];
+    filterDate?(date: Date): boolean;
+    fixedHeight?: boolean;
+    forceShowMonthNavigation?: boolean;
+    formatWeekDay?(formattedDate: string): string;
+    formatWeekNumber?(date: Date): string | number;
+    highlightDates?: Array<HighlightDates | Date>;
+    id?: string;
+    includeDates?: Date[];
+    includeTimes?: Date[];
+    injectTimes?: Date[];
+    inline?: boolean;
+    isClearable?: boolean;
+    locale?: string | Locale;
+    maxDate?: Date | null;
+    maxTime?: Date;
+    minDate?: Date | null;
+    minTime?: Date;
+    monthsShown?: number;
+    name?: string;
+    nextMonthButtonLabel?: string;
+    onBlur?(event: React.FocusEvent<HTMLInputElement>): void;
+    onChange(date: Date | null, event: React.SyntheticEvent<any> | undefined): void;
+    onChangeRaw?(event: React.FocusEvent<HTMLInputElement>): void;
+    onClickOutside?(event: React.MouseEvent<HTMLDivElement>): void;
+    onFocus?(event: React.FocusEvent<HTMLInputElement>): void;
+    onInputClick?(): void;
+    onInputError?(err: { code: number; msg: string }): void;
+    onKeyDown?(event: React.KeyboardEvent<HTMLDivElement>): void;
+    onMonthChange?(date: Date): void;
+    onSelect?(date: Date, event: React.SyntheticEvent<any> | undefined): void;
+    onWeekSelect?(firstDayOfWeek: Date, weekNumber: string | number, event: React.SyntheticEvent<any> | undefined): void;
+    onYearChange?(date: Date): void;
+    open?: boolean;
+    openToDate?: Date;
+    peekNextMonth?: boolean;
+    placeholderText?: string;
+    popperClassName?: string;
+    popperContainer?(props: { children: React.ReactNode[] }): React.ReactNode;
+    popperModifiers?: Popper.Modifiers;
+    popperPlacement?: string;
+    popperProps?: {};
+    preventOpenOnFocus?: boolean;
+    previousMonthButtonLabel?: string;
+    readOnly?: boolean;
+    renderCustomHeader?(params: {
+        date: Date;
+        changeYear(year: number): void;
+        changeMonth(month: number): void;
+        decreaseMonth(): void;
+        increaseMonth(): void;
+        prevMonthButtonDisabled: boolean;
+        nextMonthButtonDisabled: boolean;
+    }): React.ReactNode;
+    renderDayContents?(dayOfMonth: number): React.ReactNode;
+    required?: boolean;
+    scrollableMonthYearDropdown?: boolean;
+    scrollableYearDropdown?: boolean;
+    selected?: Date | null;
+    selectsEnd?: boolean;
+    selectsStart?: boolean;
+    shouldCloseOnSelect?: boolean;
+    showDisabledMonthNavigation?: boolean;
+    showMonthDropdown?: boolean;
+    showMonthYearDropdown?: boolean;
+    showMonthYearPicker?: boolean;
+    showTimeSelect?: boolean;
+    showTimeSelectOnly?: boolean;
+    showWeekNumbers?: boolean;
+    showYearDropdown?: boolean;
+    startDate?: Date | null;
+    startOpen?: boolean;
+    strictParsing?: boolean;
+    tabIndex?: number;
+    timeCaption?: string;
+    timeFormat?: string;
+    timeIntervals?: number;
+    title?: string;
+    todayButton?: React.ReactNode;
+    useShortMonthInDropdown?: boolean;
+    useWeekdaysShort?: boolean;
+    value?: string;
+    weekLabel?: string;
+    withPortal?: boolean;
+    yearDropdownItemNumber?: number;
+    timeInputLabel?: string;
+    showTimeInput?: boolean;
+    inlineFocusSelectedMonth?: boolean;
+    onDayMouseEnter?: (date: Date) => void;
+    onMonthMouseLeave?: () => void;
+}
+
+export class DateTimePicker extends React.Component<DateTimePickerProps, DateTimePickerState> {
+
+    constructor(props: DateTimePickerProps) {
+        super(props);
+
+        this.state = {
+        };
+    }
+
+    render() {
+        const { className } = this.props;
+
+        let combinedClassName = className ? className + ' yc_date_picker_input' : 'yc_date_picker_input';
+
+        return (
+            <React.Fragment>
+                <LanguageContext.Consumer>
+                    {lang => (
+                        <span className='yc_date_picker'>
+                            <DatePicker
+                                adjustDateOnChange={this.props.adjustDateOnChange}
+                                allowSameDay={this.props.allowSameDay}
+                                autoComplete={this.props.autoComplete}
+                                autoFocus={this.props.autoFocus}
+                                calendarClassName={this.props.calendarClassName}
+                                calendarContainer={this.props.calendarContainer}
+                                children={this.props.children}
+                                className={combinedClassName}
+                                clearButtonTitle={this.props.clearButtonTitle}
+                                customInput={this.props.customInput}
+                                customInputRef={this.props.customInputRef}
+                                dateFormat={this.props.dateFormat}
+                                dateFormatCalendar={this.props.dateFormatCalendar}
+                                dayClassName={this.props.dayClassName}
+                                disabled={this.props.disabled}
+                                disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+                                dropdownMode={this.props.dropdownMode}
+                                endDate={this.props.endDate}
+                                excludeDates={this.props.excludeDates}
+                                excludeTimes={this.props.excludeTimes}
+                                filterDate={this.props.filterDate}
+                                fixedHeight={this.props.fixedHeight}
+                                forceShowMonthNavigation={this.props.forceShowMonthNavigation}
+                                formatWeekDay={this.props.formatWeekDay}
+                                formatWeekNumber={this.props.formatWeekNumber}
+                                highlightDates={this.props.highlightDates}
+                                id={this.props.id}
+                                includeDates={this.props.includeDates}
+                                includeTimes={this.props.includeTimes}
+                                injectTimes={this.props.injectTimes}
+                                inline={this.props.inline}
+                                isClearable={this.props.isClearable}
+                                locale={this.props.locale}
+                                maxDate={this.props.maxDate}
+                                maxTime={this.props.maxTime}
+                                minDate={this.props.minDate}
+                                minTime={this.props.minTime}
+                                monthsShown={this.props.monthsShown}
+                                name={this.props.name}
+                                nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+                                onBlur={this.props.onBlur}
+                                onChange={this.props.onChange}
+                                onChangeRaw={this.props.onChangeRaw}
+                                onClickOutside={this.props.onClickOutside}
+                                onFocus={this.props.onFocus}
+                                onInputClick={this.props.onInputClick}
+                                onInputError={this.props.onInputError}
+                                onKeyDown={this.props.onKeyDown}
+                                onMonthChange={this.props.onMonthChange}
+                                onSelect={this.props.onSelect}
+                                onWeekSelect={this.props.onWeekSelect}
+                                onYearChange={this.props.onYearChange}
+                                open={this.props.open}
+                                openToDate={this.props.openToDate}
+                                peekNextMonth={this.props.peekNextMonth}
+                                placeholderText={this.props.placeholderText}
+                                popperClassName={this.props.popperClassName}
+                                popperContainer={this.props.popperContainer}
+                                popperModifiers={this.props.popperModifiers}
+                                popperPlacement={this.props.popperPlacement}
+                                popperProps={this.props.popperProps}
+                                preventOpenOnFocus={this.props.preventOpenOnFocus}
+                                previousMonthButtonLabel={this.props.previousMonthButtonLabel}
+                                readOnly={this.props.readOnly}
+                                renderCustomHeader={this.props.renderCustomHeader}
+                                renderDayContents={this.props.renderDayContents}
+                                required={this.props.required}
+                                scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
+                                scrollableYearDropdown={this.props.scrollableYearDropdown}
+                                selected={this.props.selected}
+                                selectsEnd={this.props.selectsEnd}
+                                selectsStart={this.props.selectsStart}
+                                shouldCloseOnSelect={this.props.shouldCloseOnSelect}
+                                showDisabledMonthNavigation={this.props.showDisabledMonthNavigation}
+                                showMonthDropdown={this.props.showMonthDropdown}
+                                showMonthYearDropdown={this.props.showMonthYearDropdown}
+                                showMonthYearPicker={this.props.showMonthYearPicker}
+                                showTimeSelect={this.props.showTimeSelect}
+                                showTimeSelectOnly={this.props.showTimeSelectOnly}
+                                showWeekNumbers={this.props.showWeekNumbers}
+                                showYearDropdown={this.props.showYearDropdown}
+                                startDate={this.props.startDate}
+                                startOpen={this.props.startOpen}
+                                strictParsing={this.props.strictParsing}
+                                tabIndex={this.props.tabIndex}
+                                timeCaption={this.props.timeCaption}
+                                timeFormat={this.props.timeFormat}
+                                timeIntervals={this.props.timeIntervals}
+                                title={this.props.title}
+                                todayButton={this.props.todayButton}
+                                useShortMonthInDropdown={this.props.useShortMonthInDropdown}
+                                useWeekdaysShort={this.props.useWeekdaysShort}
+                                value={this.props.value}
+                                weekLabel={this.props.weekLabel}
+                                withPortal={this.props.withPortal}
+                                yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+                                timeInputLabel={this.props.timeInputLabel}
+                                showTimeInput={this.props.showTimeInput}
+                                inlineFocusSelectedMonth={this.props.inlineFocusSelectedMonth}
+                                onDayMouseEnter={this.props.onDayMouseEnter}
+                                onMonthMouseLeave={this.props.onMonthMouseLeave}></DatePicker>
+                        </span>
                     )}
                 </LanguageContext.Consumer>
             </React.Fragment>

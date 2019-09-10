@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import { LanguageContext, Language } from '../backbone/Language';
 import { Title } from '../components/elements/Card';
 import { GolfSlot } from '../components/GolfSlot';
@@ -60,6 +60,13 @@ export class Home extends React.Component<RouteComponentProps<{}>, OrganisationS
                                     paddingBottom='30px'
                                     paddingLeft='50px'
                                     transform="font-capitalize" >Gustavsviksbanan</Title>
+                            </Col>
+                        </Row>
+                        <Row >
+                            <Col>
+                                <Alert color="warning" style={{ maxWidth: 500 }} >
+                                    No Slots
+                                </Alert>
                             </Col>
                         </Row>
                     </div>

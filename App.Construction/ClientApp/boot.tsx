@@ -7,6 +7,7 @@ import './theme/icons/iconic-bootstrap.css'
 import './theme/icons.css';
 
 import './theme/site.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
