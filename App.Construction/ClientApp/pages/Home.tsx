@@ -1,12 +1,13 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Row, Col, Alert } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import { LanguageContext, Language } from '../backbone/Language';
-import { Title } from '../components/elements/Card';
+import { Title, Alert, Button } from '../components/elements/Card';
 import { GolfSlot } from '../components/GolfSlot';
 import { Breadcrumb } from '../components/Breadcrumb';
 
 interface OrganisationState {
+    visible: boolean;
 }
 
 export class Home extends React.Component<RouteComponentProps<{}>, OrganisationState> {
@@ -14,8 +15,10 @@ export class Home extends React.Component<RouteComponentProps<{}>, OrganisationS
         super(props);
 
         this.state = {
+            visible: true
         };
 
+        this.setVisible = this.setVisible.bind(this);
     }
 
     componentDidMount() {
@@ -25,6 +28,10 @@ export class Home extends React.Component<RouteComponentProps<{}>, OrganisationS
     }
 
     public componentDidUpdate() {
+    }
+
+    private setVisible(visible: boolean) {
+        this.setState({ visible });
     }
 
     public render() {
@@ -49,8 +56,8 @@ export class Home extends React.Component<RouteComponentProps<{}>, OrganisationS
                         </Row>
                         <Row >
                             <Col>
-                                <GolfSlot time="14.55" note="this is a sample paragraph.you can write any text here 2019." onSlotClick={() => console.log('One')} />
-                                <GolfSlot time="14.55" note="this is a sample paragraph.you can write any text here 2019." onSlotClick={() => console.log('two')} />
+                                <GolfSlot time="14.55" note="Spelaren med Golf-Id 645876-123 är redan bokad på detta tillfälle." onSlotClick={() => console.log('One')} />
+                                <GolfSlot time="14.55" note="한국어" onSlotClick={() => console.log('two')} />
                             </Col>
                         </Row>
                         <Row>
@@ -64,9 +71,9 @@ export class Home extends React.Component<RouteComponentProps<{}>, OrganisationS
                         </Row>
                         <Row >
                             <Col>
-                                <Alert color="warning" style={{ maxWidth: 500 }} >
-                                    No Slots
-                                </Alert>
+                                <Alert color="warning" message="No Slots" description="This is a warning notice about copywriting." icon targetIcon='iconic-signpost'
+                                    visible={this.state.visible}
+                                    onClose={this.setVisible} />
                             </Col>
                         </Row>
                     </div>

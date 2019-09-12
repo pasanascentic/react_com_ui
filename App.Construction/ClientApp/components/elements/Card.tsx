@@ -4,8 +4,10 @@ import { Requireable } from 'prop-types';
 import { RouteComponentProps } from 'react-router';
 import DatePicker from "react-datepicker";
 import Popper from 'popper.js';
+import { faIR } from 'date-fns/locale';
+import { NavbarBrand } from 'reactstrap';
 
-export type Color = 'primary' | 'secondary';
+export type Color = 'primary' | 'secondary' | 'warning' | 'success' | 'info' | 'danger';
 export type TitleSize = 'font-xs' | 'font-sm' | 'font-md' | 'font-lg' | 'font-xl' | number;
 export type TitleTransform = 'font-none' | 'font-capitalize' | 'font-uppercase' | 'font-lowercase';
 export type TitleWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
@@ -99,16 +101,21 @@ export interface ButtonState {
 }
 
 export interface ButtonProps {
-    width?: number;
-    color?: Color;
-    paddingRight?: string;
-    paddingLeft?: string;
-    paddingTop?: string;
-    paddingBottom?: string;
+    width?: number | undefined;
+    color?: Color | undefined;
+    paddingRight?: string | undefined;
+    paddingLeft?: string | undefined;
+    paddingTop?: string | undefined;
+    paddingBottom?: string | undefined;
+    className?: string | undefined;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export class Button extends React.Component<ButtonProps, ButtonState> {
+    public static defaultProps = {
+        color: 'primary'
+    };
+
     constructor(props: ButtonProps) {
         super(props);
 
@@ -125,7 +132,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     }
 
     render() {
-        const { color, paddingBottom, paddingLeft, paddingRight, paddingTop } = this.props;
+        const { color, paddingBottom, paddingLeft, paddingRight, paddingTop, className } = this.props;
 
         let targetColor = color ? color : 'primary';
 
@@ -135,13 +142,13 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
         let targetPaddingTop = paddingTop ? paddingTop : '0';
         let targetPadding = targetPaddingTop + ' ' + targetPaddingRight + ' ' + targetPaddingBottom + ' ' + targetPaddingLeft;
 
-        let className = targetColor + ' yc_btn';
+        let combindClassName = className ? targetColor + ' ' + className + ' yc_btn' : targetColor + ' yc_btn';
 
         return <React.Fragment>
             <LanguageContext.Consumer>
                 {lang => (
                     <button
-                        className={className}
+                        className={combindClassName}
                         style={{
                         }}
                         onClick={this.buttonOnClick}>
@@ -222,6 +229,7 @@ export interface ParagraphProps {
     transform?: TitleTransform;
     bold?: TitleWeight;
     color?: string;
+    children: string;
 }
 
 export class Paragraph extends React.Component<ParagraphProps, ParagraphState> {
@@ -250,7 +258,7 @@ export class Paragraph extends React.Component<ParagraphProps, ParagraphState> {
                             color: color ? color : '#797979',
                             fontSize: typeof size === "number" ? size : ''
                         }}>
-                        {this.props.children}
+                        <span dangerouslySetInnerHTML={{ __html: this.props.children }}></span>
                     </div>
                 )}
             </LanguageContext.Consumer>
@@ -365,6 +373,7 @@ export class Dash extends React.Component<DashProps, DashState> {
 
 
 export interface NavBarState {
+    show: boolean;
 }
 
 export interface NavBarProps {
@@ -376,7 +385,19 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
         super(props);
 
         this.state = {
+            show: false
         };
+
+        this.onClick = this.onClick.bind(this);
+    }
+
+    public onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const { show } = this.state;
+
+        console.log(show);
+        this.setState({
+            show: !show
+        });
     }
 
     render() {
@@ -384,11 +405,27 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
 
         let classNameCombind = className ? className + ' yc_navbar' : 'yc_navbar';
 
+        const children = this.props.children;
+
         return <React.Fragment>
             <LanguageContext.Consumer>
                 {lang => (
                     <nav className={classNameCombind}>
-                        {this.props.children}
+                        {React.Children.map(children, (child: any, i) => {
+                            if (child.type.displayName === 'NavBarBrand') {
+                                return child;
+                            } else if (child.type.displayName === 'NavToggle') {
+                                return React.cloneElement<NavToggle>(child, { onClick: this.onClick } as unknown as NavToggle);
+                            } else if (child.type.displayName === 'NavWrapper') {
+                                let element = child as React.ReactElement<NavWrapper>;
+                                let wrapper = element as unknown as NavWrapper;
+                                let className = wrapper.props.className ? wrapper.props.className : '';
+                                className = this.state.show ? className + ' show ease' : className + ' ease';
+                                return React.cloneElement<NavWrapper>(child, { className: className } as unknown as NavWrapper);
+                            } else {
+                                return child;
+                            }
+                        })}
                     </nav>
                 )}
             </LanguageContext.Consumer>
@@ -436,6 +473,49 @@ export class NavBarBrand extends React.Component<NavBarBrandProps, NavBarBrandSt
 
 
 
+export interface NavToggleState {
+}
+
+export interface NavToggleProps {
+    className?: string;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export class NavToggle extends React.Component<NavToggleProps, NavToggleState> {
+    constructor(props: NavToggleProps) {
+        super(props);
+
+        this.state = {
+        };
+
+        this.onClick = this.onClick.bind(this);
+    }
+
+    public onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (this.props.onClick) {
+            this.props.onClick(event);
+        }
+    }
+
+    render() {
+        const { className } = this.props;
+
+        let classNameCombind = className ? className + ' yc_navbar_toggler' : 'yc_navbar_toggler';
+
+        return <React.Fragment>
+            <LanguageContext.Consumer>
+                {lang => (
+                    <Button onClick={this.onClick} color="secondary" className={classNameCombind}>
+                        <span className="iconic iconic-menu font-md"></span>
+                    </Button>
+                )}
+            </LanguageContext.Consumer>
+        </React.Fragment>
+    }
+}
+
+
+
 export interface NavWrapperState {
 }
 
@@ -459,7 +539,7 @@ export class NavWrapper extends React.Component<NavWrapperProps, NavWrapperState
         return <React.Fragment>
             <LanguageContext.Consumer>
                 {lang => (
-                    <div className={classNameCombind}>
+                    <div className={classNameCombind} >
                         {this.props.children}
                     </div>
                 )}
@@ -1669,3 +1749,98 @@ export class DateTimePicker extends React.Component<DateTimePickerProps, DateTim
         )
     }
 }
+
+
+
+
+export interface AlertState {
+}
+
+export interface AlertProps {
+    color: Color;
+    className?: string | undefined;
+    style?: React.CSSProperties | undefined;
+    message: string;
+    closable: boolean;
+    icon: boolean;
+    visible: boolean;
+    targetIcon?: string | undefined;
+    description?: string | undefined;
+    onClose?: (visible: boolean) => void;
+}
+
+export class Alert extends React.Component<AlertProps, AlertState> {
+
+    public static defaultProps = {
+        icon: false,
+        closable: false,
+        visible: true
+    };
+
+    constructor(props: AlertProps) {
+        super(props);
+
+        this.state = {
+        };
+
+        this.renderClose = this.renderClose.bind(this);
+        this.renderIcon = this.renderIcon.bind(this);
+        this.onClose = this.onClose.bind(this);
+    }
+
+    public onClose = () => {
+        if (this.props.onClose) {
+            this.props.onClose(false);
+        }
+    }
+
+    render() {
+        if (!this.props.visible) {
+            return (
+                <React.Fragment >
+                </React.Fragment >
+            );
+        }
+
+        const { color, className, style, message, description, icon, closable } = this.props;
+
+        let combinedClassName = className ? className + ' yc_alert' : 'yc_alert';
+        combinedClassName = combinedClassName + ' ' + color;
+        combinedClassName = icon ? combinedClassName + ' yc_alert_with_icon' : combinedClassName;
+        combinedClassName = closable ? combinedClassName + ' yc_alert_closable' : combinedClassName;
+
+        return (
+            <React.Fragment>
+                <LanguageContext.Consumer>
+                    {lang => (
+                        <div className={combinedClassName} style={style}>
+                            {icon && this.renderIcon()}
+                            {closable && this.renderClose()}
+                            <span className="yc_alert_message">{message}</span>
+                            {description && <span className="yc_alert_description">{description}</span>}
+                        </div>
+                    )}
+                </LanguageContext.Consumer>
+            </React.Fragment>
+        )
+    }
+
+    public renderIcon() {
+        const { targetIcon } = this.props;
+
+        let className = "color-white iconic yc_alert_icon " + targetIcon;
+
+        return (
+            <span className={className}></span>
+        );
+    }
+
+    public renderClose() {
+        return (
+            <span className="yc_alert_close_icon" onClick={this.onClose}>
+                <svg viewBox="64 64 896 896" focusable="false" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg>
+            </span>
+        );
+    }
+}
+

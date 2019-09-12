@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LanguageContext, Language } from '../backbone/Language';
-import { NavBar, NavBarBrand, NavWrapper, Nav, NavItem } from '../components/elements/Card';
+import { NavBar, NavBarBrand, NavWrapper, Nav, NavItem, Button, NavToggle } from '../components/elements/Card';
 
 interface TopNavbarProps {
 }
@@ -28,6 +28,7 @@ export class TopNavbar extends React.Component<TopNavbarProps, TopNavbarState> {
                     <div>
                         <NavBar>
                             <NavBarBrand brandName='Sista'></NavBarBrand>
+                            <NavToggle />
                             <NavWrapper>
                                 <Nav>
                                     <NavItem name='Oversikt' icon='iconic-eye-open' path='/'></NavItem>

@@ -103,7 +103,7 @@ export class Lagg extends React.Component<RouteComponentProps<{}>, LaggState> {
                                         <div>
                                             <Spin type={SpinType.Spin_folding_cube} backdropType={BackdropType.Window} loading={this.state.loading} />
                                             <Row className="padding-bottom-50 padding-top-50">
-                                                <Col md="6">
+                                                <Col md="6" lg="4" xl="3">
                                                     <Row>
                                                         <Col xs="11" className="no-padding">
                                                             <Title color="#111" bold={700} size={16}
@@ -122,10 +122,10 @@ export class Lagg extends React.Component<RouteComponentProps<{}>, LaggState> {
                                                         </Col>
                                                     </Row>
                                                 </Col>
-                                                <Col md="6"></Col>
+                                                <Col md="6" lg="4" xl="3"></Col>
                                             </Row>
                                             <Row className="padding-bottom-50">
-                                                <Col md="6">
+                                                <Col md="6" lg="4" xl="3">
                                                     <Row>
                                                         <Col xs="11" className="no-padding">
                                                             <DateTimePicker
@@ -144,10 +144,10 @@ export class Lagg extends React.Component<RouteComponentProps<{}>, LaggState> {
                                                         </Col>
                                                     </Row>
                                                 </Col>
-                                                <Col md="6"></Col>
+                                                <Col md="6" lg="4" xl="3"></Col>
                                             </Row>
                                             <Row className="padding-bottom-50">
-                                                <Col md="6">
+                                                <Col md="6" lg="4" xl="3">
                                                     <Row>
                                                         <Col xs="11" className="no-padding">
                                                             <TimePicker format='{time}' value={this.state.time} onChange={this.setTime} placeholder='Starttid fran 1:an'></TimePicker>
@@ -159,10 +159,10 @@ export class Lagg extends React.Component<RouteComponentProps<{}>, LaggState> {
                                                         </Col>
                                                     </Row>
                                                 </Col>
-                                                <Col md="6"></Col>
+                                                <Col md="6" lg="4" xl="3"></Col>
                                             </Row>
                                             <Row className="padding-bottom-50">
-                                                <Col md="6">
+                                                <Col md="6" lg="4" xl="3">
                                                     <Row>
                                                         <Col xs="11" className="no-padding">
                                                             <Editor value={this.state.text} placeholder="Golf-id oa spelaren i bollen" onChange={this.setText}></Editor>
@@ -174,7 +174,7 @@ export class Lagg extends React.Component<RouteComponentProps<{}>, LaggState> {
                                                         </Col>
                                                     </Row>
                                                 </Col>
-                                                <Col md="6">
+                                                <Col md="6" lg="4" xl="3">
                                                     <Title color="#111" bold={400} size={11}
                                                         transform="font-none" >*Den angivna spelaren behover bekrafta tiden pa hal 9</Title>
                                                 </Col>
