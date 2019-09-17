@@ -27,7 +27,7 @@ export class GolfSlot extends React.Component<GolfSlotProps, GolfSlotState> {
             <LanguageContext.Consumer>
                 {lang => (
                     <Card maxWidth={500}>
-                        <CardBody>
+                        <CardBody className='golf_body'>
                             <Row>
                                 <Col xs="2" className="no-padding">
                                     <Badge bgColor="#134D08" dimension={30} icon="iconic-signpost" />

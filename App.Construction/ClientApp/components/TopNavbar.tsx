@@ -34,7 +34,7 @@ export class TopNavbar extends React.Component<TopNavbarProps, TopNavbarState> {
                                     <NavItem name='Oversikt' icon='iconic-eye-open' path='/'></NavItem>
                                     <NavItem name='Lagg ut starttid' icon='iconic-clock' path='/lagg'></NavItem>
                                     <NavItem name='Hur gor man' icon='iconic-question-mark' path='/support'></NavItem>
-                                    <NavItem name='Klubbprofil' icon='iconic-person-genderless' path='/help'></NavItem>
+                                    <NavItem name='Klubbprofil' icon='iconic-person-genderless' path='/klubbprofil'></NavItem>
                                 </Nav>
                             </NavWrapper>
                         </NavBar>

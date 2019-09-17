@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LanguageContext } from '../../backbone/Language';
-import { Requireable } from 'prop-types';
+import { Requireable, number } from 'prop-types';
 import { RouteComponentProps } from 'react-router';
 import DatePicker from "react-datepicker";
 import Popper from 'popper.js';
@@ -8,9 +8,10 @@ import { faIR } from 'date-fns/locale';
 import { NavbarBrand } from 'reactstrap';
 
 export type Color = 'primary' | 'secondary' | 'warning' | 'success' | 'info' | 'danger';
-export type TitleSize = 'font-xs' | 'font-sm' | 'font-md' | 'font-lg' | 'font-xl' | number;
-export type TitleTransform = 'font-none' | 'font-capitalize' | 'font-uppercase' | 'font-lowercase';
-export type TitleWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+export type FontSize = 'font-xs' | 'font-sm' | 'font-md' | 'font-lg' | 'font-xl' | number;
+export type FontTransform = 'font-none' | 'font-capitalize' | 'font-uppercase' | 'font-lowercase';
+export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+export type TextAlign = 'topLeft' | 'topCenter' | 'topRight' | 'leftCenter' | 'middle' | 'rightCenter' | 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'none';
 export enum SpinType { Spin_folding_cube, Spinner }
 export enum BackdropType { Full = 'full', Window = 'window' }
 
@@ -43,9 +44,9 @@ export class Card extends React.Component<CardProps, CardState> {
                     <div
                         className={this.props.className ? this.props.className + ' yc_card' : 'yc_card'}
                         style={{
-                            width: this.props.width ? this.props.width + 'px' : 'auto',
-                            maxWidth: this.props.maxWidth ? this.props.maxWidth + 'px' : 'auto',
-                            minWidth: this.props.minWidth ? this.props.minWidth + 'px' : 'auto',
+                            width: this.props.width ? this.props.width : '100%',
+                            maxWidth: this.props.maxWidth ? this.props.maxWidth : 'auto',
+                            minWidth: this.props.minWidth ? this.props.minWidth : 'auto',
                             backgroundColor: this.props.bgColor ? this.props.bgColor : 'white'
                         }}>
                         {this.props.children}
@@ -65,7 +66,7 @@ export interface CardBodyState {
 
 export interface CardBodyProps {
     width?: number;
-    color?: string;
+    bgColor?: string;
     className?: string;
 }
 
@@ -82,9 +83,171 @@ export class CardBody extends React.Component<CardBodyProps, CardBodyState> {
             <LanguageContext.Consumer>
                 {lang => (
                     <div
-                        className={this.props.className ? this.props.className + ' yc_card-body' : 'yc_card-body'}
+                        className={this.props.className ? this.props.className + ' yc_card_body' : 'yc_card_body'}
                         style={{
-                            backgroundColor: this.props.color ? this.props.color : 'white'
+                            backgroundColor: this.props.bgColor ? this.props.bgColor : 'inherite'
+                        }}>
+                        {this.props.children}
+                    </div>
+                )}
+            </LanguageContext.Consumer>
+        </React.Fragment>
+    }
+}
+
+
+
+
+export interface CardTitleState {
+}
+
+export interface CardTitleProps {
+    size?: FontSize;
+    transform?: FontTransform;
+    bold?: FontWeight;
+    color?: string;
+    className?: string;
+    textAlign?: TextAlign;
+    width?: number | undefined;
+    height?: number | undefined;
+}
+
+export class CardTitle extends React.Component<CardTitleProps, CardTitleState> {
+    constructor(props: CardTitleProps) {
+        super(props);
+
+        this.state = {
+        };
+    }
+
+    render() {
+        const { size, transform, bold, color, className, width, height, textAlign } = this.props;
+
+        let targetSize = size ? typeof size === "number" ? '' : size : 'font-md';
+        let targetTransform = transform ? transform : 'font-none';
+        let targetTextAlign = textAlign ? textAlign : 'middle';
+
+        let combindClassName = className ? targetTextAlign + ' ' + targetSize + ' ' + targetTransform + ' ' + className + ' yc_card_title' : targetTextAlign + ' ' + targetSize + ' ' + targetTransform + ' yc_card_title';
+
+        return <React.Fragment>
+            <LanguageContext.Consumer>
+                {lang => (
+                    <div
+                        className={combindClassName}
+                        style={{
+                            fontWeight: bold ? bold : 400,
+                            color: color ? color : 'black',
+                            width: width ? width : '100%',
+                            height: height ? height : '100%',
+                            fontSize: typeof size === "number" ? size : '',
+                        }}>
+                        {this.props.children}
+                    </div>
+                )}
+            </LanguageContext.Consumer>
+        </React.Fragment>
+    }
+}
+
+
+
+
+export interface CardSubTitleState {
+}
+
+export interface CardSubTitleProps {
+    size?: FontSize;
+    transform?: FontTransform;
+    bold?: FontWeight;
+    color?: string;
+    className?: string;
+    textAlign?: TextAlign;
+    width?: number | undefined;
+    height?: number | undefined;
+}
+
+export class CardSubTitle extends React.Component<CardSubTitleProps, CardSubTitleState> {
+    constructor(props: CardSubTitleProps) {
+        super(props);
+
+        this.state = {
+        };
+    }
+
+    render() {
+        const { size, transform, bold, color, className, width, height, textAlign } = this.props;
+
+        let targetSize = size ? typeof size === "number" ? '' : size : 'font-md';
+        let targetTransform = transform ? transform : 'font-none';
+        let targetTextAlign = textAlign ? textAlign : 'middle';
+
+        let combindClassName = className ? targetTextAlign + ' ' + targetSize + ' ' + targetTransform + ' ' + className + ' yc_card_sub_title' : targetTextAlign + ' ' + targetSize + ' ' + targetTransform + ' yc_card_sub_title';
+
+        return <React.Fragment>
+            <LanguageContext.Consumer>
+                {lang => (
+                    <div
+                        className={combindClassName}
+                        style={{
+                            fontWeight: bold ? bold : 400,
+                            color: color ? color : 'black',
+                            width: width ? width : '100%',
+                            height: height ? height : '100%',
+                            fontSize: typeof size === "number" ? size : '',
+                        }}>
+                        {this.props.children}
+                    </div>
+                )}
+            </LanguageContext.Consumer>
+        </React.Fragment>
+    }
+}
+
+
+
+
+export interface CardTextState {
+}
+
+export interface CardTextProps {
+    size?: FontSize;
+    transform?: FontTransform;
+    bold?: FontWeight;
+    color?: string;
+    className?: string;
+    textAlign?: TextAlign;
+    width?: number | undefined;
+    height?: number | undefined;
+}
+
+export class CardText extends React.Component<CardTextProps, CardTextState> {
+    constructor(props: CardTextProps) {
+        super(props);
+
+        this.state = {
+        };
+    }
+
+    render() {
+        const { size, transform, bold, color, className, width, height, textAlign } = this.props;
+
+        let targetSize = size ? typeof size === "number" ? '' : size : 'font-md';
+        let targetTransform = transform ? transform : 'font-none';
+        let targetTextAlign = textAlign ? textAlign : 'middle';
+
+        let combindClassName = className ? targetTextAlign + ' ' + targetSize + ' ' + targetTransform + ' ' + className + ' yc_card_text' : targetTextAlign + ' ' + targetSize + ' ' + targetTransform + ' yc_card_text';
+
+        return <React.Fragment>
+            <LanguageContext.Consumer>
+                {lang => (
+                    <div
+                        className={combindClassName}
+                        style={{
+                            fontWeight: bold ? bold : 400,
+                            color: color ? color : 'black',
+                            width: width ? width : '100%',
+                            height: height ? height : '100%',
+                            fontSize: typeof size === "number" ? size : '',
                         }}>
                         {this.props.children}
                     </div>
@@ -101,19 +264,25 @@ export interface ButtonState {
 }
 
 export interface ButtonProps {
-    width?: number | undefined;
-    color?: Color | undefined;
+    width?: number | undefined | 'fit-content' | '100%';
+    style?: Color | undefined;
     paddingRight?: string | undefined;
     paddingLeft?: string | undefined;
     paddingTop?: string | undefined;
     paddingBottom?: string | undefined;
     className?: string | undefined;
+    color?: string;
+    size?: FontSize;
+    transform?: FontTransform;
+    bold?: FontWeight;
+    textAlign?: TextAlign;
+    height?: number | undefined | 'fit-content' | '100%';
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export class Button extends React.Component<ButtonProps, ButtonState> {
     public static defaultProps = {
-        color: 'primary'
+        style: 'primary'
     };
 
     constructor(props: ButtonProps) {
@@ -132,17 +301,21 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     }
 
     render() {
-        const { color, paddingBottom, paddingLeft, paddingRight, paddingTop, className } = this.props;
+        const { paddingBottom, paddingLeft, paddingRight, paddingTop, className, transform, textAlign, bold, style, width, height, size } = this.props;
 
-        let targetColor = color ? color : 'primary';
+        let targetColor = style ? style : 'primary';
 
-        let targetPaddingBottom = paddingBottom ? paddingBottom : '0';
-        let targetPaddingLeft = paddingLeft ? paddingLeft : '0';
-        let targetPaddingRight = paddingRight ? paddingRight : '0';
-        let targetPaddingTop = paddingTop ? paddingTop : '0';
+        let targetPaddingBottom = paddingBottom ? paddingBottom : '12px';
+        let targetPaddingLeft = paddingLeft ? paddingLeft : '40px';
+        let targetPaddingRight = paddingRight ? paddingRight : '40px';
+        let targetPaddingTop = paddingTop ? paddingTop : '12px';
         let targetPadding = targetPaddingTop + ' ' + targetPaddingRight + ' ' + targetPaddingBottom + ' ' + targetPaddingLeft;
+        let targetTransform = transform ? transform : 'font-uppercase';
+        let targetTextAlign = textAlign ? textAlign : 'none';
+        let targetSize = size ? typeof size === "number" ? '' : size : 'font-md';
 
-        let combindClassName = className ? targetColor + ' ' + className + ' yc_btn' : targetColor + ' yc_btn';
+        let targets = 'yc_btn ' + targetColor + ' ' + targetTransform + ' ' + targetTextAlign + ' ' + targetSize + ' ';
+        let combindClassName = className ? targets + className : targets + targetColor;
 
         return <React.Fragment>
             <LanguageContext.Consumer>
@@ -150,6 +323,11 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
                     <button
                         className={combindClassName}
                         style={{
+                            fontWeight: bold ? bold : 400,
+                            width: width ? width : 'fit-content',
+                            height: height ? height : 'fit-content',
+                            padding: targetPadding ? targetPadding : '',
+                            fontSize: size ? typeof size === "number" ? size : '' : ''
                         }}
                         onClick={this.buttonOnClick}>
                         {this.props.children}
@@ -167,14 +345,15 @@ export interface TitleState {
 }
 
 export interface TitleProps {
-    size?: TitleSize;
-    transform?: TitleTransform;
-    bold?: TitleWeight;
+    size?: FontSize;
+    transform?: FontTransform;
+    bold?: FontWeight;
     color?: string;
     paddingRight?: string;
     paddingLeft?: string;
     paddingTop?: string;
     paddingBottom?: string;
+    className?: string | undefined;
 }
 
 export class Title extends React.Component<TitleProps, TitleState> {
@@ -186,7 +365,7 @@ export class Title extends React.Component<TitleProps, TitleState> {
     }
 
     render() {
-        const { size, transform, bold, color, paddingBottom, paddingLeft, paddingRight, paddingTop } = this.props;
+        const { size, transform, bold, color, paddingBottom, paddingLeft, paddingRight, paddingTop, className } = this.props;
 
         let targetSize = size ? typeof size === "number" ? '' : size : 'font-md';
         let targetTransform = transform ? transform : 'font-none';
@@ -197,13 +376,14 @@ export class Title extends React.Component<TitleProps, TitleState> {
         let targetPaddingTop = paddingTop ? paddingTop : '0';
         let targetPadding = targetPaddingTop + ' ' + targetPaddingRight + ' ' + targetPaddingBottom + ' ' + targetPaddingLeft;
 
-        let className = targetSize + ' ' + targetTransform + ' yc_title';
+        let combindClassName = targetSize + ' ' + targetTransform + ' yc_title';
+        combindClassName = className ? combindClassName + ' ' + className : combindClassName;
 
         return <React.Fragment>
             <LanguageContext.Consumer>
                 {lang => (
                     <div
-                        className={className}
+                        className={combindClassName}
                         style={{
                             fontWeight: bold ? bold : 400,
                             color: color ? color : 'black',
@@ -221,15 +401,75 @@ export class Title extends React.Component<TitleProps, TitleState> {
 
 
 
+export interface TextState {
+}
+
+export interface TextProps {
+    size?: FontSize;
+    transform?: FontTransform;
+    bold?: FontWeight;
+    color?: string;
+    paddingRight?: string;
+    paddingLeft?: string;
+    paddingTop?: string;
+    paddingBottom?: string;
+    className?: string | undefined;
+}
+
+export class Text extends React.Component<TextProps, TextState> {
+    constructor(props: TextProps) {
+        super(props);
+
+        this.state = {
+        };
+    }
+
+    render() {
+        const { size, transform, bold, color, paddingBottom, paddingLeft, paddingRight, paddingTop, className } = this.props;
+
+        let targetSize = size ? typeof size === "number" ? '' : size : 'font-md';
+        let targetTransform = transform ? transform : 'font-none';
+
+        let targetPaddingBottom = paddingBottom ? paddingBottom : '0';
+        let targetPaddingLeft = paddingLeft ? paddingLeft : '0';
+        let targetPaddingRight = paddingRight ? paddingRight : '0';
+        let targetPaddingTop = paddingTop ? paddingTop : '0';
+        let targetPadding = targetPaddingTop + ' ' + targetPaddingRight + ' ' + targetPaddingBottom + ' ' + targetPaddingLeft;
+
+        let combindClassName = targetSize + ' ' + targetTransform + ' yc_text';
+        combindClassName = className ? combindClassName + ' ' + className : combindClassName;
+
+        return <React.Fragment>
+            <LanguageContext.Consumer>
+                {lang => (
+                    <div
+                        className={combindClassName}
+                        style={{
+                            fontWeight: bold ? bold : 400,
+                            color: color ? color : 'black',
+                            fontSize: typeof size === "number" ? size : '',
+                            padding: targetPadding
+                        }}>
+                        {this.props.children}
+                    </div>
+                )}
+            </LanguageContext.Consumer>
+        </React.Fragment>
+    }
+}
+
+
+
+
+
 export interface ParagraphState {
 }
 
 export interface ParagraphProps {
-    size?: TitleSize;
-    transform?: TitleTransform;
-    bold?: TitleWeight;
+    size?: FontSize;
+    transform?: FontTransform;
+    bold?: FontWeight;
     color?: string;
-    children: string;
 }
 
 export class Paragraph extends React.Component<ParagraphProps, ParagraphState> {
@@ -258,7 +498,7 @@ export class Paragraph extends React.Component<ParagraphProps, ParagraphState> {
                             color: color ? color : '#797979',
                             fontSize: typeof size === "number" ? size : ''
                         }}>
-                        <span dangerouslySetInnerHTML={{ __html: this.props.children }}></span>
+                        {this.props.children}
                     </div>
                 )}
             </LanguageContext.Consumer>
@@ -505,7 +745,12 @@ export class NavToggle extends React.Component<NavToggleProps, NavToggleState> {
         return <React.Fragment>
             <LanguageContext.Consumer>
                 {lang => (
-                    <Button onClick={this.onClick} color="secondary" className={classNameCombind}>
+                    <Button onClick={this.onClick} style="secondary"
+                        className={classNameCombind}
+                        paddingBottom=' 0.5rem'
+                        paddingTop='0.5rem'
+                        paddingLeft='0.75rem'
+                        paddingRight='0.75rem'>
                         <span className="iconic iconic-menu font-md"></span>
                     </Button>
                 )}
@@ -1841,6 +2086,75 @@ export class Alert extends React.Component<AlertProps, AlertState> {
                 <svg viewBox="64 64 896 896" focusable="false" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg>
             </span>
         );
+    }
+}
+
+
+
+
+export interface CheckboxState {
+}
+
+export interface CheckboxProps {
+    className?: string;
+    name: string;
+    active: boolean;
+    width?: number | '100%' | 'fit-content' | undefined;
+    height?: number | '100%' | 'fit-content' | undefined;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export class Checkbox extends React.Component<CheckboxProps, CheckboxState> {
+    public static defaultProps = {
+        active: false,
+    };
+
+    constructor(props: CheckboxProps) {
+        super(props);
+
+        this.state = {
+        };
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    public onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e);
+        if (this.props.onChange) {
+            this.props.onChange(e);
+        }
+    }
+
+    render() {
+        const { className, width, height, active, name } = this.props;
+
+        let classNameCombind = className ? className + ' yc_checkbox_wrapper' : 'yc_checkbox_wrapper';
+
+
+        return <React.Fragment>
+            <LanguageContext.Consumer>
+                {lang => (
+                    <span className={classNameCombind}>
+                        <span className={active ? "yc_checkbox yc_checkbox_checked" : "yc_checkbox"}>
+                            <input type="checkbox" className="yc_checkbox_input"
+                                name={name}
+                                checked={active}
+                                onChange={this.onChange}
+                                style={{
+                                    width: width,
+                                    height: height,
+                                }}>
+                            </input>
+                            <span className="yc_checkbox_inner">
+                            </span>
+                        </span>
+                        <span>
+                            {this.props.children}
+                        </span>
+                    </span>
+                )}
+            </LanguageContext.Consumer>
+        </React.Fragment>
     }
 }
 
