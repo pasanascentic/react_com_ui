@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const EncodingPlugin = require('webpack-encoding-plugin');
 const bundleOutputDir = './wwwroot/dist';
 
 module.exports = (env) => {

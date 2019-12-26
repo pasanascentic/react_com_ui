@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.DS_Store
+/._.DS_Store
+/App.Construction/ClientApp/.DS_Store
+/App.Construction/ClientApp/._.DS_Store
+/App.Construction/.DS_Store
+/App.Construction/._.DS_Store

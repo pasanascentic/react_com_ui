@@ -11,7 +11,7 @@ export type Color = 'primary' | 'secondary' | 'warning' | 'success' | 'info' | '
 export type FontSize = 'font-xs' | 'font-sm' | 'font-md' | 'font-lg' | 'font-xl' | number;
 export type FontTransform = 'font-none' | 'font-capitalize' | 'font-uppercase' | 'font-lowercase';
 export type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-export type TextAlign = 'topLeft' | 'topCenter' | 'topRight' | 'leftCenter' | 'middle' | 'rightCenter' | 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'none';
+export type ContentAlign = 'topLeft' | 'topCenter' | 'topRight' | 'leftCenter' | 'middle' | 'rightCenter' | 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'none';
 export enum SpinType { Spin_folding_cube, Spinner }
 export enum BackdropType { Full = 'full', Window = 'window' }
 
@@ -107,7 +107,7 @@ export interface CardTitleProps {
     bold?: FontWeight;
     color?: string;
     className?: string;
-    textAlign?: TextAlign;
+    textAlign?: ContentAlign;
     width?: number | undefined;
     height?: number | undefined;
 }
@@ -161,7 +161,7 @@ export interface CardSubTitleProps {
     bold?: FontWeight;
     color?: string;
     className?: string;
-    textAlign?: TextAlign;
+    textAlign?: ContentAlign;
     width?: number | undefined;
     height?: number | undefined;
 }
@@ -215,7 +215,7 @@ export interface CardTextProps {
     bold?: FontWeight;
     color?: string;
     className?: string;
-    textAlign?: TextAlign;
+    textAlign?: ContentAlign;
     width?: number | undefined;
     height?: number | undefined;
 }
@@ -275,7 +275,7 @@ export interface ButtonProps {
     size?: FontSize;
     transform?: FontTransform;
     bold?: FontWeight;
-    textAlign?: TextAlign;
+    textAlign?: ContentAlign;
     height?: number | undefined | 'fit-content' | '100%';
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -354,6 +354,8 @@ export interface TitleProps {
     paddingTop?: string;
     paddingBottom?: string;
     className?: string | undefined;
+    style?: React.CSSProperties | undefined;
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export class Title extends React.Component<TitleProps, TitleState> {
@@ -362,10 +364,18 @@ export class Title extends React.Component<TitleProps, TitleState> {
 
         this.state = {
         };
+
+        this.titleOnClick = this.titleOnClick.bind(this);
+    }
+
+    private titleOnClick(event: React.MouseEvent<HTMLDivElement>) {
+        if (this.props.onClick) {
+            this.props.onClick(event);
+        }
     }
 
     render() {
-        const { size, transform, bold, color, paddingBottom, paddingLeft, paddingRight, paddingTop, className } = this.props;
+        const { size, transform, bold, color, paddingBottom, paddingLeft, paddingRight, paddingTop, className, style } = this.props;
 
         let targetSize = size ? typeof size === "number" ? '' : size : 'font-md';
         let targetTransform = transform ? transform : 'font-none';
@@ -378,6 +388,7 @@ export class Title extends React.Component<TitleProps, TitleState> {
 
         let combindClassName = targetSize + ' ' + targetTransform + ' yc_title';
         combindClassName = className ? combindClassName + ' ' + className : combindClassName;
+        console.log(targetPadding);
 
         return <React.Fragment>
             <LanguageContext.Consumer>
@@ -385,11 +396,15 @@ export class Title extends React.Component<TitleProps, TitleState> {
                     <div
                         className={combindClassName}
                         style={{
-                            fontWeight: bold ? bold : 400,
-                            color: color ? color : 'black',
-                            fontSize: typeof size === "number" ? size : '',
-                            padding: targetPadding
-                        }}>
+                            ...style,
+                            ...{
+                                fontWeight: bold ? bold : 400,
+                                color: color ? color : 'black',
+                                fontSize: typeof size === "number" ? size : '',
+                                padding: targetPadding
+                            }
+                        }}
+                        onClick={this.titleOnClick}>
                         {this.props.children}
                     </div>
                 )}
@@ -542,7 +557,7 @@ export class Badge extends React.Component<BadgeProps, BadgeState> {
                     <div
                         className={className}
                         style={{
-                            color: color ? color : 'black',
+                            color: color ? color : 'white',
                             backgroundColor: bgColor ? bgColor : 'black',
                             height: dimension ? dimension : 25,
                             width: dimension ? dimension : 25,
@@ -550,7 +565,7 @@ export class Badge extends React.Component<BadgeProps, BadgeState> {
                             cursor: clickable ? 'pointer' : 'default',
                         }}>
                         <span
-                            className={"color-white iconic font-sm " + targetIcon}
+                            className={"iconic font-sm " + targetIcon}
                             aria-hidden="true"
                             style={{
                                 fontSize: dimension ? dimension * .5 : 25 * .5,
@@ -633,8 +648,7 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
 
     public onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         const { show } = this.state;
-
-        console.log(show);
+        
         this.setState({
             show: !show
         });
@@ -1566,6 +1580,8 @@ export class Editor extends React.Component<EditorProps, EditorState> {
 
 export interface ToolTipState {
     toggle: boolean;
+    left: number;
+    top: number;
 }
 
 export interface ToolTipProps {
@@ -1575,24 +1591,26 @@ export interface ToolTipProps {
     dimension?: number;
     bgColor?: string;
     icon?: string;
-    tipTop?: number;
-    tipLeft?: number;
 }
 
 export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
 
     innerDiv: HTMLDivElement | undefined;
+    outerDiv: HTMLDivElement | undefined;
 
     constructor(props: ToolTipProps) {
         super(props);
 
         this.state = {
-            toggle: false
+            toggle: false,
+            left: 0,
+            top: 0
         };
 
         this.onClcik = this.onClcik.bind(this);
 
         this.innerDiv = undefined;
+        this.outerDiv = undefined;
     }
 
     componentWillMount() {
@@ -1615,14 +1633,33 @@ export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
     }
 
     public onClcik = (e: any) => {
-        const { toggle } = this.state;
-
-        this.setState({ toggle: !toggle });
+        if (!this.state.toggle) {
+            this.setState({ toggle: true });
+        }
     }
 
-    public refCallback = (element: HTMLDivElement) => {
-        if (element) {
+    public refInnerCallback = (element: HTMLDivElement) => {
+        if (element && this.outerDiv) {
             this.innerDiv = element;
+            let innerBoundingClientRect = this.innerDiv.getBoundingClientRect() as DOMRect;
+            let outerBoundingClientRect = this.outerDiv.getBoundingClientRect() as DOMRect;
+            let extra = 5;
+
+            let width = outerBoundingClientRect.x + innerBoundingClientRect.width + outerBoundingClientRect.width + extra + outerBoundingClientRect.width;
+            let left = window.innerWidth <= width ? (innerBoundingClientRect.width + extra) * -1 : outerBoundingClientRect.x < innerBoundingClientRect.width ? outerBoundingClientRect.width + extra : outerBoundingClientRect.width + extra;
+
+            let height = outerBoundingClientRect.y + innerBoundingClientRect.height + outerBoundingClientRect.height;
+            let top = window.innerHeight <= height ? (innerBoundingClientRect.height + extra) * -1 : window.innerHeight - height >= innerBoundingClientRect.height ? 0 : ((window.innerHeight - height) + extra) * -1;
+
+            this.setState({ left: left, top: top });
+
+            console.log(innerBoundingClientRect);
+        }
+    };
+
+    public refOuterCallback = (element: HTMLDivElement) => {
+        if (element) {
+            this.outerDiv = element;
         }
     };
 
@@ -1633,12 +1670,15 @@ export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
 
         let classNameCombind = className ? className + ' yc_tooltip' : 'yc_tooltip';
 
+        if (this.outerDiv) {
+        }
 
         return <React.Fragment>
             <LanguageContext.Consumer>
                 {lang => (
-                    <div>
+                    <div className='yc_tooltip_wrapper'>
                         <div
+                            ref={this.refOuterCallback}
                             className={classNameCombind}
                             style={{
                                 color: color ? color : 'black',
@@ -1664,13 +1704,11 @@ export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
     }
 
     public renderTip() {
-        const { tipTop, tipLeft } = this.props;
-
         return (
-            <div className='yc_tooltip_tip' ref={this.refCallback}
+            <div className='yc_tooltip_tip' ref={this.refInnerCallback}
                 style={{
-                    top: tipTop ? tipTop : 25 + 4,
-                    left: tipLeft ? tipLeft : 25 + 4,
+                    top: this.state.top,
+                    left: this.state.left,
                 }}>
                 <div className='yc_tooltip_content'>
                     {this.props.children}
@@ -2119,7 +2157,6 @@ export class Checkbox extends React.Component<CheckboxProps, CheckboxState> {
     }
 
     public onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e);
         if (this.props.onChange) {
             this.props.onChange(e);
         }

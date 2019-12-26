@@ -46,7 +46,6 @@
   <ItemGroup>
     <Folder Include="ClientApp\api\" />
     <Folder Include="ClientApp\backbone\" />
-    <Folder Include="ClientApp\modals\" />
     <Folder Include="ClientApp\panels\" />
   </ItemGroup>
   

@@ -56,6 +56,10 @@ hr {
     margin-bottom: 10px !important;
 }
 
+.margin-bottom-20 {
+    margin-bottom: 20px !important;
+}
+
 .break-word {
     word-break: break-word;
 }
@@ -812,6 +816,10 @@ li.yc_time_picker_panel_select_option_selected {
     }
 
 
+.yc_tooltip_wrapper {
+    position: relative;
+}
+
 .yc_tooltip {
     display: flex;
     align-items: center;
@@ -830,7 +838,7 @@ li.yc_time_picker_panel_select_option_selected {
     position: absolute;
     max-width: 100%;
     z-index: 10000;
-    min-width: 100px;
+    min-width: 150px;
 }
 
 .yc_tooltip_content {
@@ -1286,20 +1294,20 @@ li.yc_time_picker_panel_select_option_selected {
     visibility: visible;
 }
 
-    .yc_checkbox_checked .yc_checkbox_inner::after {
-        position: absolute;
-        display: table;
-        border: 2px solid #fff;
-        border-top: 0;
-        border-left: 0;
-        -webkit-transform: rotate(45deg) scale(1) translate(-50%, -50%);
-        -ms-transform: rotate(45deg) scale(1) translate(-50%, -50%);
-        transform: rotate(45deg) scale(1) translate(-50%, -50%);
-        opacity: 1;
-        -webkit-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
-        transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
-        content: ' ';
-    }
+.yc_checkbox_checked .yc_checkbox_inner::after {
+    position: absolute;
+    display: table;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    -webkit-transform: rotate(45deg) scale(1) translate(-50%, -50%);
+    -ms-transform: rotate(45deg) scale(1) translate(-50%, -50%);
+    transform: rotate(45deg) scale(1) translate(-50%, -50%);
+    opacity: 1;
+    -webkit-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+    transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+    content: ' ';
+}
 
 .yc_checkbox_checked::after {
     position: absolute;
@@ -1355,6 +1363,22 @@ li.yc_time_picker_panel_select_option_selected {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+
+.flex-direction-row {
+    flex-direction: row;
+}
+
+.flex-direction-column-reverse {
+    flex-direction: column-reverse;
+}
+
+.flex-direction-row-reverse {
+    flex-direction: row-reverse;
 }
 
 .topLeft {
@@ -1459,4 +1483,25 @@ li.yc_time_picker_panel_select_option_selected {
         border-radius: unset;
         height: 100%;
     }
+}
+
+.modal-header, .modal-footer {
+    border: 0;
+}
+
+.modal-title {
+    text-align: center;
+}
+
+.modal-header .close {
+    color: inherit;
+}
+
+    .modal-header .close:focus {
+        outline: none;
+    }
+
+.modal-content {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), 0 -4px 10px rgba(0, 0, 0, 0.2);
+    border: none;
 }

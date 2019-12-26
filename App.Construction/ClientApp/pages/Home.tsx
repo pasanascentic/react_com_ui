@@ -56,8 +56,8 @@ export class Home extends React.Component<RouteComponentProps<{}>, OrganisationS
                         </Row>
                         <Row >
                             <Col>
-                                <GolfSlot time="14.55" note="Spelaren med Golf-Id 645876-123 är redan bokad på detta tillfälle." onSlotClick={() => console.log('One')} />
-                                <GolfSlot time="14.55" note="한국어" onSlotClick={() => console.log('two')} />
+                                <GolfSlot id="1" time="14.55" note="Spelaren med Golf-Id 645876-123 är redan bokad på detta tillfälle." onSlotClick={() => console.log('One')} />
+                                <GolfSlot id="2" time="14.55" note="한국어" onSlotClick={() => console.log('two')} />
                             </Col>
                         </Row>
                         <Row>
